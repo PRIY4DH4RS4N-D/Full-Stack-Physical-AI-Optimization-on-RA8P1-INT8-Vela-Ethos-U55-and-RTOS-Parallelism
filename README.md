@@ -79,7 +79,7 @@ We benchmark two on-device configurations, holding the model, weights, and INT8 
 
 *Note: Accuracy (mAP) is held constant and reported for both stages as a control metric — proving that performance gains come from execution efficiency.*
 
-### 🛠️ Optimization 1: INT8 Quantization + Ethos-U55 NPU Offload
+### Optimization 1: INT8 Quantization + Ethos-U55 NPU Offload
 
 The model was trained in FP32 and post-training quantized to INT8, then compiled with Arm Vela targeting the Ethos-U55 via our custom conversion script:
 
@@ -101,7 +101,7 @@ NPU operators                  272 (100.0%)
 ```
 This is the headline delta: moving from float compute on the M85 CPU to INT8 compute fully offloaded to the NPU. We report this explicitly as **two combined changes — precision (FP32→INT8) and execution target (CPU→NPU)**. 
 
-### 🗜️ Optimization 2: Vela Weight Compression (Free & Automatic)
+### Optimization 2: Vela Weight Compression (Free & Automatic)
 
 Vela's INT8 NPU encoding applies lossless weight compression as part of standard compilation — no extra flags required:
 
@@ -111,7 +111,7 @@ NPU Encoded Weights Size     4358.36 KiB
 ```
 This is an **11.4% reduction in weight payload size**, achieved automatically with zero accuracy impact and zero additional engineering effort — genuinely reducing flash footprint and read traffic.
 
-### 🧠 Optimization 3: Memory Hierarchy Analysis (Vela Memory Mode)
+### Optimization 3: Memory Hierarchy Analysis (Vela Memory Mode)
 
 The RA8P1 provides ~1.6 MB of usable on-chip user SRAM. Our NPU-encoded weights are ~4.26 MB (4358.36 KiB) — meaning full on-chip weight residency is not physically possible. Rather than assume this, we verified it directly with three separate Vela test runs:
 
