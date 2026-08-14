@@ -112,12 +112,24 @@ The RA8P1 provides ~1.6 MB of usable on-chip user SRAM. Our NPU-encoded weights 
 
 1. **Full on-chip weight residency (`Sram_Only`)**
    - *Question:* Can the full weight set fit on-chip if we force it to?
+   - *Command:* 
+     ```bash
+     vela yolox_tiny_224_int8.tflite --accelerator-config ethos-u55-256 --system-config Ethos_U55_High_End_Embedded --memory-mode Sram_Only --optimise Performance
+     ```
    - *Result:* `Total On-chip Flash used: 4464.19 KiB`. This confirms a required footprint of ~4.46 MB against ~1.6 MB of available SRAM. `Shared_Sram` (flash-streamed weights) is the only physically valid memory mode.
 2. **Optimization target comparison (`Size` vs `Performance`)**
    - *Question:* Does compiling for a smaller footprint free up headroom?
+   - *Command:* 
+     ```bash
+     vela yolox_tiny_224_int8.tflite --accelerator-config ethos-u55-256 --system-config Ethos_U55_High_End_Embedded --memory-mode Shared_Sram --optimise Size --verbose-weights
+     ```
    - *Result:* Identical `Total SRAM used` (794.81 KiB) and bandwidth figures. Vela's scheduler has already reached its efficiency ceiling at this SRAM budget.
 3. **SRAM scheduling budget sweep (`--arena-cache-size`)**
    - *Question:* Does a larger on-chip budget let the scheduler cache more and cut flash traffic?
+   - *Command:* 
+     ```bash
+     vela yolox_tiny_224_int8.tflite --accelerator-config ethos-u55-256 --system-config Ethos_U55_High_End_Embedded --memory-mode Shared_Sram --arena-cache-size 1600000 --optimise Performance --verbose-weights
+     ```
    - *Result:* Unchanged SRAM usage and bandwidth. The default cascade schedule is optimal.
 
 *We report this as a **memory characterization finding**. We determined precisely why and how much headroom exists, ruling out plausible-looking "obvious" optimizations with hardware-grounded evidence.*
