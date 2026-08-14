@@ -1,0 +1,16 @@
+# Model Preparation & Quantization (custom_object_detection.ipynb)
+torch
+onnx
+onnxsim
+onnx2tf
+tensorflow==2.18.0
+opencv-python
+tqdm
+
+# Arm Ethos-U55 NPU Compiler Toolchain
+ethos-u-vela
+
+# NOTE: The custom compiler toolchain (mera) is distributed as a pre-built wheel file 
+# and must be installed manually from the compiler_toolchain folder.
+# For Windows (Python 3.10), run:
+# pip install compiler_toolchain/mera-2.6.0+pkg.4815-cp310-cp310-win_amd64.whl
