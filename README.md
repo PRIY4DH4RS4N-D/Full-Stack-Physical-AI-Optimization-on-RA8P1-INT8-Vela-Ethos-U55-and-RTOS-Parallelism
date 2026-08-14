@@ -35,7 +35,7 @@
 
 </div>
 
-## Edge-AI Assistive HUD on Renesas RA8P1 — Arm "Create" Hackathon (Track 1: Physical AI)
+## Track 1: Physical AI
 
 ## Project Overview
 
