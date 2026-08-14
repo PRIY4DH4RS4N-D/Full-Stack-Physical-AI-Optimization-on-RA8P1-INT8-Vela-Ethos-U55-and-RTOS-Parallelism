@@ -1,7 +1,7 @@
 <div align="center">
 
-<h1>FULL-STACK <br> PHYSICAL AI <br> OPTIMIZATION</h1>
-<h3>ON RENESAS RA8P1</h3>
+<h1>FULL-STACK PHYSICAL AI OPTIMIZATION</h1>
+<h2>ON RENESAS RA8P1</h2>
 <p><b>INT8 • VELA • ETHOS-U55 • RTOS PARALLELISM</b></p>
 <p><i>"From neural-network quantization to deterministic real-time edge execution."</i></p>
 
