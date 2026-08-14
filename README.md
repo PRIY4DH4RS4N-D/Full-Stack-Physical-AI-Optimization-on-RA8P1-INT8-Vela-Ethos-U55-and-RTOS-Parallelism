@@ -56,10 +56,10 @@ We treat this as an engineering investigation, not just a deployment: we systema
 
 The final deliverable is a working, camera-driven object-detection application:
 
-- 📷 **Input:** Live camera capture via the RA8P1's camera interface.
-- 🧠 **Inference:** YOLOX-Tiny (INT8), 100% of operators mapped to the Ethos-U55 NPU (0% CPU fallback).
-- 🖥️ **Output:** Bounding boxes and object classes rendered as an on-screen overlay via the on-chip 2D drawing engine (D/AVE2D), with assistive-tech framing (fixed color palette, object-count indicator, no alarming/threat-style visuals).
-- ⚡ **Pipeline:** Capture → Preprocess → NPU Inference → Postprocess/NMS → Render, running as parallel real-time tasks under **μT-Kernel (TRON RTOS) / FreeRTOS** rather than a single serialized loop.
+- **Input:** Live camera capture via the RA8P1's camera interface.
+- **Inference:** YOLOX-Tiny (INT8), 100% of operators mapped to the Ethos-U55 NPU (0% CPU fallback).
+- **Output:** (onboard LCD)Bounding boxes and object classes rendered as an on-screen overlay via the on-chip 2D drawing engine (D/AVE2D), with assistive-tech framing (fixed color palette, object-count indicator, no alarming/threat-style visuals).
+- **Pipeline:** Capture → Preprocess → NPU Inference → Postprocess/NMS → Render, running as parallel real-time tasks under **μT-Kernel (TRON RTOS) / FreeRTOS** rather than a single serialized loop.
 
 **Our submission artifacts include:**
 1. The compiled `.tflite` model + generated NPU command stream and C source (via our custom conversion scripts).
