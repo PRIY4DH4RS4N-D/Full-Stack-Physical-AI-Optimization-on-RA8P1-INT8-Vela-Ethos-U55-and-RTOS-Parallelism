@@ -47,7 +47,7 @@ Every step is measured on real hardware, and every claim is backed by either an 
 
 We treat this as an engineering investigation, not just a deployment: we tested memory configurations that *didn't* help and reported why, rather than only reporting the wins. That honesty is itself part of the technical story — it shows we understand the RA8P1's actual memory hierarchy rather than running default commands and hoping for the best.
 
-> 🏆 **Why this should win:** 
+> 🏆 **Technical Significance** 
 > The RA8P1 pairs a fast NPU with a comparatively small SRAM budget (1.6 MB usable) against a real-world model whose encoded weights (~4.4 MB) can't fully fit on-chip. That's a genuinely constrained embedded systems problem, not a toy example — and our submission documents exactly how we characterized and worked within that constraint, with every optimization step isolated and independently justified.
 
 ---
