@@ -40,7 +40,7 @@
 
 ## Project Overview
 
-This project implements a real-time, assistive object-detection system running entirely on-device on the Renesas RA8P1 (Arm Cortex-M85 + Ethos-U55 NPU). The core model is **YOLOX-Tiny**, INT8-quantized and compiled with the Arm Vela compiler for the Ethos-U55 NPU. Model conversion is handled by our **custom conversion Python script**, which takes the quantized `.tflite` model and produces the NPU command stream plus the C source/header files consumed directly by the on-device application — *no external runtime framework involved.*
+This project implements a real-time, assistive object-detection system running entirely on-device on the Renesas RA8P1 (Arm Cortex-M85 + Ethos-U55 NPU). The core model is **YOLOX-Tiny**, INT8-quantized and compiled with the Arm Vela compiler for the Ethos-U55 NPU. Model conversion is handled by our **custom conversion Python script**, which takes the quantized `.tflite` model and produces the NPU command stream plus the C source/header files consumed directly by the on-device application 
 
 What makes this submission interesting isn't just "we ran a quantized model on an NPU" — every team doing edge AI on Ethos-U55 does that. What we're showcasing is a **full-stack optimization process**: starting from a naive FP32/CPU baseline and systematically moving the workload through NPU offload, compiler-level memory scheduling analysis, and RTOS-level task parallelism. 
 Every step is measured on real hardware, and every claim is backed by either an on-device measurement or the Vela compiler's own output log.
