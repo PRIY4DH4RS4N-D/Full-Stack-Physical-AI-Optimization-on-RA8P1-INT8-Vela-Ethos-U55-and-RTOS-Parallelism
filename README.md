@@ -127,23 +127,40 @@ The RA8P1 provides ~1.6 MB of usable on-chip user SRAM. Our NPU-encoded weights 
 
 *We report this as a **memory characterization finding**. We determined precisely why and how much headroom exists, ruling out plausible-looking "obvious" optimizations with hardware-grounded evidence.*
 
-### 🔄 Optimization 4: Parallel RTOS Task Pipeline
+### Optimization 4 — Parallel RTOS Task Pipeline (μT-Kernel / TRON RTOS, FreeRTOS)
 
-The application pipeline runs capture, preprocessing, Ethos-U55 inference, and postprocessing as **separate, overlapping real-time tasks** under μT-Kernel / FreeRTOS, rather than a single serialized loop:
+Instead of a blocking bare-metal loop, the vision pipeline is decoupled into independent µT-Kernel tasks so the CPU, camera, display, and NPU run **concurrently** rather than waiting on each other.
+
+**Before vs. after:**
 
 ```text
-Sequential (Stage 1 baseline):
-Capture → Preprocess → Inference → Postprocess → Capture → ...
+Sequential (bare-metal):
+Camera │ Capture │  idle   │  idle   │  idle    │ Capture │
+CPU    │  idle   │ Preproc │  idle   │ Postproc │  idle   │
+NPU    │  idle   │  idle   │ Infer   │  idle    │  idle   │
 
-Parallel (Stage 2, this optimization):
-Capture     ████      ████      ████
-Preprocess     ████      ████      ████
-Inference         ██████      ██████
-Postprocess           ██          ██
+Parallel (TRON RTOS, this implementation):
+Frame 1: Capture → Preproc → Infer → Postproc → Draw
+Frame 2:           Capture → Preproc → Infer → Postproc
+Frame 3:                     Capture → Preproc → Infer
 ```
-This improves end-to-end FPS by removing idle time between pipeline stages, entirely independent of the compilation pipeline.
 
----
+**Result:** FPS is no longer bounded by the *sum* of all stages — only by the *slowest* one (Ethos-U55 inference). This gain is entirely independent of the Vela/memory tuning covered in Optimization 3.
+
+**Two tasks, full hardware overlap:**
+
+| Task | Priority | Trigger | What it does |
+|---|---|---|---|
+| `camera_task` | 10 (high) | CEU hardware interrupt (new frame) | Preempts background work, runs `image_rgb565_to_int8`, kicks off DAVE2D/GLCDC via DMA to draw the previous frame's boxes (**0 CPU cycles**), then signals `ai_flg_id` |
+| `ai_task` | 15 (low) | Woken by `camera_task` | Calls `RunModel()` on the Ethos-U55, then blocks on `ethosu_semaphore_take` — CPU sleeps, **0% utilization during inference** — wakes on NPU interrupt, runs NMS, signals `camera_task` |
+
+**Why this matters:**
+- No busy-waiting anywhere in the pipeline — every stage either does real work or sleeps
+- Camera capture and LCD rendering latency are fully hidden behind NPU inference
+- CPU utilization drops to 0% while the NPU is running, freeing cycles for the next frame's preprocessing
+- Effective FPS scales with the bottleneck stage only, not the pipeline's total stage count
+
+This is the one optimization in this list that is **independent of the model and the custom Vela/Mera compilation pipeline entirely** — it improves end-to-end FPS by removing idle time between pipeline stages, not by making any single stage individually faster. This is our primary, directly measured performance improvement and is reported alongside the memory analysis above as a distinct, complementary contribution.
 
 ## 📊 Benchmark Results
 
