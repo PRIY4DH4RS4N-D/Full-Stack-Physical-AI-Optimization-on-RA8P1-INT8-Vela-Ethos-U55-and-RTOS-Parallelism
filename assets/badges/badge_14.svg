@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="149.75" height="28" viewBox="0 0 149.75 28">
+<style>
+  @keyframes flyIn {
+    0%, 2% { transform: translateY(28px); opacity: 0; }
+    10% { transform: translateY(0); opacity: 1; }
+    90% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0; }
+  }
+  .badge-anim {
+    animation: flyIn 8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+    animation-delay: 0.840s;
+  }
+</style>
+<g class="badge-anim">
+<svg xmlns="http://www.w3.org/2000/svg" width="149.75" height="28" role="img" aria-label="TASK SCHEDULING"><title>TASK SCHEDULING</title><g shape-rendering="crispEdges"><rect width="149.75" height="28" fill="#e53935"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="100"><text transform="scale(.1)" x="748.75" y="175" textLength="1257.5" font-weight="bold">TASK SCHEDULING</text></g></svg>
+</g>
+</svg>
