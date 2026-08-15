@@ -260,13 +260,7 @@ Run all cells in the notebook to produce `yolox_tiny_224_INT8.tflite` — a full
 Run our custom conversion script `convert_model.py` to turn the quantized `.tflite` model into the NPU command stream plus a C source/header pair for the on-device application:
 
 ```bash
-python convert_model.py \
-  --input yolox_tiny_224_INT8.tflite \
-  --accelerator-config ethos-u55-256 \
-  --system-config Ethos_U55_High_End_Embedded \
-  --memory-mode Shared_Sram \
-  --optimise Performance \
-  --output-dir embedded_c
+python convert_model.py --input yolox_tiny_224_INT8.tflite --accelerator-config ethos-u55-256 --system-config Ethos_U55_High_End_Embedded --memory-mode Shared_Sram --optimise Performance --output-dir embedded_c
 ```
 This emits the model source arrays (`.c` and `.h` files) consumed directly by the embedded application build — no separate runtime SDK required.
 
