@@ -4,6 +4,16 @@
 
 <br>
 
+  <br/>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./ra8p1-presentation.svg">
+    <img src="./ra8p1-presentation.svg" alt="EK-RA8P1 Hardware Board" width="80%" style="max-width: 800px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);">
+  </picture>
+  <br/>
+  <br/>
+
+## 🛠 Tech Stack
+
 <p align="center">
   <a href="https://www.renesas.com/us/en/products/microcontrollers-microprocessors/ra-cortex-m-mcus/ra8p1-high-performance-advanced-graphics-and-vision-mcu"><img src="./assets/badges/badge_00.svg" /></a>
   <a href="https://developer.arm.com/Processors/Cortex-M85"><img src="./assets/badges/badge_01.svg" /></a>
