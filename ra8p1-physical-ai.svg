@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%" style="background-color: #05070a; font-family: 'Inter', system-ui, sans-serif; overflow: hidden;">
+    <defs>
+        <!-- Gradients -->
+        <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" stop-color="#0a1220" />
+            <stop offset="100%" stop-color="#05070a" />
+        </radialGradient>
+        
+        <linearGradient id="chip-package" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#2a2f3a" />
+            <stop offset="50%" stop-color="#14171e" />
+            <stop offset="100%" stop-color="#0b0d12" />
+        </linearGradient>
+        
+        <linearGradient id="chip-edge" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#4a5265" />
+            <stop offset="100%" stop-color="#11131a" />
+        </linearGradient>
+
+        <linearGradient id="silicon-die" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0a192f" />
+            <stop offset="25%" stop-color="#112240" />
+            <stop offset="50%" stop-color="#233554" />
+            <stop offset="75%" stop-color="#112240" />
+            <stop offset="100%" stop-color="#0a192f" />
+        </linearGradient>
+        
+        <linearGradient id="npu-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#00ffaa" stop-opacity="0.4"/>
+        </linearGradient>
+        
+        <linearGradient id="mcu-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0077ff" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="#0077ff" stop-opacity="0.25"/>
+        </linearGradient>
+
+        <linearGradient id="trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#112240" stop-opacity="0" />
+            <stop offset="100%" stop-color="#00f0ff" stop-opacity="0.8" />
+        </linearGradient>
+
+        <!-- Filters -->
+        <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="15" stdDeviation="25" flood-color="#000000" flood-opacity="0.8"/>
+        </filter>
+        
+        <filter id="glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+
+        <filter id="glow-teal" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="12" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+
+        <!-- Patterns -->
+        <pattern id="dot-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <circle cx="15" cy="15" r="1" fill="#ffffff" opacity="0.03" />
+        </pattern>
+        
+        <pattern id="micro-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#00f0ff" stroke-width="0.5" stroke-opacity="0.15" />
+        </pattern>
+    </defs>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap');
+        
+        .title { font-family: 'Inter', sans-serif; font-weight: 800; fill: #ffffff; letter-spacing: 0.15em; }
+        .subtitle { font-family: 'JetBrains Mono', monospace; font-weight: 700; fill: #64ffda; letter-spacing: 0.1em; }
+        .tech-text { font-family: 'Inter', sans-serif; font-weight: 600; fill: #8892b0; letter-spacing: 0.05em; }
+        .label-text { font-family: 'JetBrains Mono', monospace; font-weight: 400; fill: #a8b2d1; font-size: 11px; }
+        
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; filter: drop-shadow(0 0 15px #00f0ff); } }
+        @keyframes npuPulse { 0%, 90% { opacity: 0.3; } 95% { opacity: 1; filter: drop-shadow(0 0 25px #00ffaa); } 100% { opacity: 0.3; } }
+        @keyframes dashMove { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+        @keyframes rotateRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        @keyframes quantize { 0%, 10% { opacity: 0; transform: scale(0.5); } 20%, 90% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.5); } }
+
+        .anim-fade { opacity: 0; animation: fadeIn 1s ease-out forwards; }
+        .delay-1 { animation-delay: 0.4s; }
+        .delay-2 { animation-delay: 0.8s; }
+        .delay-3 { animation-delay: 1.2s; }
+        .delay-4 { animation-delay: 1.6s; }
+        .delay-5 { animation-delay: 2.0s; }
+        
+        .anim-pulse { animation: pulse 4s infinite ease-in-out; }
+        .anim-npu { animation: npuPulse 6s infinite cubic-bezier(0.4, 0, 0.2, 1); }
+        .anim-dash { animation: dashMove 3s infinite linear; }
+        .anim-ring { transform-origin: 600px 320px; animation: rotateRing 12s infinite linear; }
+        .anim-float { animation: float 6s infinite ease-in-out; }
+
+    </style>
+
+    <!-- Background -->
+    <rect width="100%" height="100%" fill="url(#bg-glow)" />
+    <rect width="100%" height="100%" fill="url(#dot-grid)" />
+
+    <!-- RTOS Parallelism Lanes (Left side) -->
+    <g class="anim-fade delay-1">
+
+        <path d="M 150 180 L 350 180 L 400 240 L 480 240" fill="none" stroke="#112240" stroke-width="2" />
+        <path d="M 150 180 L 350 180 L 400 240 L 480 240" fill="none" stroke="url(#trace-grad)" stroke-width="2" stroke-dasharray="8 30" class="anim-dash" style="animation-delay: 0.0s;" />
+        <text x="150" y="175" class="label-text">Task 01</text>
+        <circle cx="150" cy="180" r="3" fill="#00f0ff" />
+
+        <path d="M 150 240 L 320 240 L 370 280 L 480 280" fill="none" stroke="#112240" stroke-width="2" />
+        <path d="M 150 240 L 320 240 L 370 280 L 480 280" fill="none" stroke="url(#trace-grad)" stroke-width="2" stroke-dasharray="8 30" class="anim-dash" style="animation-delay: 0.5s;" />
+        <text x="150" y="235" class="label-text">Task 02</text>
+        <circle cx="150" cy="240" r="3" fill="#00f0ff" />
+
+        <path d="M 150 400 L 320 400 L 370 360 L 480 360" fill="none" stroke="#112240" stroke-width="2" />
+        <path d="M 150 400 L 320 400 L 370 360 L 480 360" fill="none" stroke="url(#trace-grad)" stroke-width="2" stroke-dasharray="8 30" class="anim-dash" style="animation-delay: 1.0s;" />
+        <text x="150" y="405" class="label-text">Task 03</text>
+        <circle cx="150" cy="410" r="3" fill="#00f0ff" />
+
+        <path d="M 150 460 L 350 460 L 400 400 L 480 400" fill="none" stroke="#112240" stroke-width="2" />
+        <path d="M 150 460 L 350 460 L 400 400 L 480 400" fill="none" stroke="url(#trace-grad)" stroke-width="2" stroke-dasharray="8 30" class="anim-dash" style="animation-delay: 1.5s;" />
+        <text x="150" y="465" class="label-text">Inference</text>
+        <circle cx="150" cy="470" r="3" fill="#00f0ff" />
+
+    </g>
+
+    <!-- Real-Time Scheduling Ring -->
+    <g class="anim-fade delay-2">
+        <circle cx="600" cy="320" r="210" fill="none" stroke="#112240" stroke-width="1" stroke-dasharray="4 8" />
+        <circle cx="600" cy="320" r="210" fill="none" stroke="#00f0ff" stroke-width="2" stroke-dasharray="40 800" class="anim-ring" filter="url(#glow-cyan)"/>
+        <text x="600" y="90" text-anchor="middle" class="label-text" fill="#64ffda">DETERMINISTIC RTOS SCHEDULING</text>
+    </g>
+
+    <!-- Central Processor Group -->
+    <g class="anim-fade delay-3 anim-float">
+        <!-- Main Package Drop Shadow & Outer Edge -->
+        <rect x="428" y="148" width="344" height="344" rx="28" fill="url(#chip-edge)" filter="url(#drop-shadow)" />
+        <!-- Main Package Body -->
+        <rect x="430" y="150" width="340" height="340" rx="26" fill="url(#chip-package)" />
+        
+        <!-- Golden Pads / Capacitors around the edge -->
+<rect x="480" y="165" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="480" y="469" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="445" y="200" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="749" y="200" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="510" y="165" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="510" y="469" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="445" y="230" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="749" y="230" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="540" y="165" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="540" y="469" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="445" y="260" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="749" y="260" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="570" y="165" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="570" y="469" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="445" y="290" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="749" y="290" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="600" y="165" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="600" y="469" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="445" y="320" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="749" y="320" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="630" y="165" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="630" y="469" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="445" y="350" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="749" y="350" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="660" y="165" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="660" y="469" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="445" y="380" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="749" y="380" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="690" y="165" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="690" y="469" width="10" height="6" fill="#ffd700" opacity="0.6" rx="1" /><rect x="445" y="410" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" /><rect x="749" y="410" width="6" height="10" fill="#ffd700" opacity="0.6" rx="1" />
+        <!-- Silicon Die Area -->
+        <rect x="460" y="180" width="280" height="280" rx="12" fill="#0a0b10" stroke="#333" stroke-width="2" />
+        <rect x="462" y="182" width="276" height="276" rx="10" fill="url(#silicon-die)" />
+        <rect x="462" y="182" width="276" height="276" rx="10" fill="url(#micro-grid)" opacity="0.4" />
+
+        <!-- Cortex-M85 Core (Left) -->
+        <rect x="475" y="195" width="115" height="140" rx="4" fill="url(#mcu-gradient)" stroke="#0077ff" stroke-width="1" stroke-opacity="0.5" class="anim-pulse" />
+        <text x="532" y="270" text-anchor="middle" class="label-text" font-size="10" fill="#a8b2d1">CORTEX-M85</text>
+        
+        <!-- Ethos-U55 NPU Core (Right) -->
+        <rect x="600" y="195" width="125" height="140" rx="4" fill="url(#npu-gradient)" stroke="#00ffaa" stroke-width="1" stroke-opacity="0.5" class="anim-npu" />
+        <text x="662" y="270" text-anchor="middle" class="label-text" font-size="10" fill="#a8b2d1">ETHOS-U55 NPU</text>
+
+        <!-- Memory / Other blocks (Bottom) -->
+        <rect x="475" y="345" width="250" height="100" rx="4" fill="#112240" stroke="#233554" stroke-width="1" />
+        
+        <!-- INT8 Quantization Visualizer inside NPU -->
+        <g class="anim-npu" transform="translate(632, 210)">
+            <!-- Draw a small grid representing optimized INT8 weights -->
+<rect x="0" y="0" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 0.0s;" /><rect x="10" y="0" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 0.1s;" /><rect x="20" y="0" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 0.2s;" /><rect x="30" y="0" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 0.30000000000000004s;" /><rect x="40" y="0" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 0.4s;" /><rect x="50" y="0" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 0.5s;" /><rect x="0" y="10" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 0.6000000000000001s;" /><rect x="10" y="10" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 0.7000000000000001s;" /><rect x="20" y="10" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 0.8s;" /><rect x="30" y="10" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 0.9s;" /><rect x="40" y="10" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 1.0s;" /><rect x="50" y="10" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 1.1s;" /><rect x="0" y="20" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 1.2000000000000002s;" /><rect x="10" y="20" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 1.3s;" /><rect x="20" y="20" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 1.4000000000000001s;" /><rect x="30" y="20" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 1.5s;" /><rect x="40" y="20" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 1.6s;" /><rect x="50" y="20" width="6" height="6" fill="#00ffaa" rx="1" style="opacity:0; animation: quantize 4s infinite 1.7000000000000002s;" />
+        </g>
+        <text x="662" y="228" text-anchor="middle" class="label-text" font-size="8" fill="#00ffaa" opacity="0.8">INT8 WEIGHTS</text>
+
+        <!-- Vela Optimization Tag -->
+        <g transform="translate(560, 310)">
+            <rect x="0" y="0" width="100" height="18" rx="9" fill="#00f0ff" opacity="0.1" stroke="#00f0ff" stroke-width="1" />
+            <text x="50" y="13" text-anchor="middle" class="label-text" font-size="9" fill="#00f0ff">VELA OPTIMIZED</text>
+        </g>
+
+        <!-- Main Chip Branding -->
+        <text x="600" y="400" text-anchor="middle" class="title" font-size="36">RA8P1</text>
+        <text x="600" y="425" text-anchor="middle" class="tech-text" font-size="10">RENESAS EMBEDDED AI ACCELERATOR</text>
+    </g>
+
+    <!-- Main Typography (Bottom) -->
+    <g class="anim-fade delay-4" transform="translate(600, 620)">
+        <text x="0" y="0" text-anchor="middle" class="title" font-size="42">FULL-STACK PHYSICAL AI</text>
+        <text x="0" y="45" text-anchor="middle" class="title" font-size="32" fill="#a8b2d1">OPTIMIZATION ON RA8P1</text>
+        
+        <rect x="-260" y="70" width="520" height="1" fill="url(#trace-grad)" />
+        
+        <text x="0" y="105" text-anchor="middle" class="subtitle" font-size="16">INT8  •  VELA  •  ETHOS-U55  •  RTOS PARALLELISM</text>
+    </g>
+    
+    <!-- Luminous Particles on main board traces (Bottom right routing) -->
+    <g class="anim-fade delay-5">
+
+        <path d="M 800 460 L 950 460 L 1050 560" fill="none" stroke="#112240" stroke-width="2" />
+        <path d="M 800 460 L 950 460 L 1050 560" fill="none" stroke="#00ffaa" stroke-width="2" stroke-dasharray="4 40" class="anim-dash" style="animation-delay: 0.0s;" opacity="0.6"/>
+
+        <path d="M 780 480 L 930 480 L 1030 580" fill="none" stroke="#112240" stroke-width="2" />
+        <path d="M 780 480 L 930 480 L 1030 580" fill="none" stroke="#00ffaa" stroke-width="2" stroke-dasharray="4 40" class="anim-dash" style="animation-delay: 0.3s;" opacity="0.6"/>
+
+        <path d="M 760 500 L 910 500 L 1010 600" fill="none" stroke="#112240" stroke-width="2" />
+        <path d="M 760 500 L 910 500 L 1010 600" fill="none" stroke="#00ffaa" stroke-width="2" stroke-dasharray="4 40" class="anim-dash" style="animation-delay: 0.6s;" opacity="0.6"/>
+
+    </g>
+</svg>
