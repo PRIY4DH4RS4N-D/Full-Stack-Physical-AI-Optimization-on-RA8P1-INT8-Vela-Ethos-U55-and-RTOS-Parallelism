@@ -198,6 +198,8 @@ This is the one optimization in this list that is **independent of the model and
 | **NPU-encoded weight size** | 4358.36 KiB (11.4% smaller) |
 | **Model size on disk** | 4920 KB |
 
+Original Model Weights: 4920.19 KiB (This is the size of the raw INT8 weights before the compiler touched them).
+NPU Encoded Weights: 4358.36 KiB (This is the size after Vela applied its Ethos-U55 specific compression).
 ---
 
 ## 💻 Setup Instructions
