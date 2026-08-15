@@ -184,7 +184,7 @@ This is the one optimization in this list that is **independent of the model and
 
 ## 📊 Benchmark Results
 
-*(Fill in with on-device measurements captured via DWT cycle counters (CPU) and Ethos-U PMU driver (NPU).)*
+
 
 | Metric | Stage 2: INT8, Ethos-U55, Tuned + RTOS |
 |:---|---:|
