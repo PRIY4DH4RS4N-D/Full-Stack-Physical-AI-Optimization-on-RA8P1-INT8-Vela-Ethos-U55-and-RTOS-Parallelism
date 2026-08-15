@@ -196,8 +196,7 @@ This is the one optimization in this list that is **independent of the model and
 | **SRAM used** | 794.81 KiB |
 | **Off-chip flash bandwidth (weights)** | 4.30 MB/inference |
 | **NPU-encoded weight size** | 4358.36 KiB (11.4% smaller) |
-| **Model size on disk** | |
-| **mAP (accuracy)** | *(held constant)* |
+| **Model size on disk** | 4920 KB |
 
 ---
 
