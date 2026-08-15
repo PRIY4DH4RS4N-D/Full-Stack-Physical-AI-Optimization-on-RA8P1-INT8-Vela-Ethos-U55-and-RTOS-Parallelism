@@ -2,15 +2,16 @@
 
 <img src="./assets/animated-title.svg" alt="Animated Title" />
 
-<br>
+<br/>
+<br/>
 
-  <br/>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./ra8p1-presentation.svg">
-    <img src="./ra8p1-presentation.svg" alt="EK-RA8P1 Hardware Board" width="80%" style="max-width: 800px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);">
-  </picture>
-  <br/>
-  <br/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./ra8p1-presentation.svg">
+  <img src="./ra8p1-presentation.svg" alt="EK-RA8P1 Hardware Board" width="80%" style="max-width: 800px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);">
+</picture>
+
+<br/>
+<br/>
 
 ## 🛠 Tech Stack
 
@@ -43,10 +44,10 @@
   <a href="https://en.wikipedia.org/wiki/Throughput"><img src="./assets/badges/badge_25.svg" /></a>
 </p>
 
-
+</div>
 
 # Full-Stack Physical AI Optimization on RA8P1: INT8 Vela (Ethos-U55) & RTOS Parallelism
-**Track 1: Physical AI 
+**Track 1: Physical AI**
 
 ## Project Overview
 
@@ -256,4 +257,3 @@ These negative results are included because they demonstrate that our final conf
 ## 📄 License
 
 This project is released under the MIT License. See `LICENSE` for details.
-
