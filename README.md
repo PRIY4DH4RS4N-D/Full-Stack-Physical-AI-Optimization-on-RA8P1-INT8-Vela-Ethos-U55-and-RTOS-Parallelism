@@ -57,7 +57,9 @@ Every step is measured on real hardware, and every claim is backed by either an 
 
 We treat this as an engineering investigation, not just a deployment: we systematically tested memory configurations that didn't yield improvements and documented the underlying reasons, rather than solely reporting the final optimizations. This rigorous approach demonstrates a deep understanding of the RA8P1's actual memory hierarchy, moving beyond simply executing default toolchain configurations.
 
-> 🏆 **Technical Significance:** 
+> [!IMPORTANT]
+> **🏆 Technical Significance**
+> 
 > The RA8P1 pairs a fast NPU with a comparatively small SRAM budget (1.6 MB usable) against a real-world model whose encoded weights (~4.4 MB) can't fully fit on-chip. That's a genuinely constrained embedded systems problem, not a toy example — and our submission documents exactly how we characterized and worked within that constraint, with every optimization step isolated and independently justified.
 
 ---
@@ -66,10 +68,25 @@ We treat this as an engineering investigation, not just a deployment: we systema
 
 The final deliverable is a working, camera-driven object-detection application:
 
+The entire vision pipeline runs as parallel real-time tasks under **μT-Kernel (TRON RTOS) / FreeRTOS** rather than a single serialized loop:
+
+```mermaid
+flowchart LR
+    A[📷 Capture<br/>Camera IF] -->|RGB565| B(⚙️ Preproc<br/>CPU)
+    B -->|INT8| C{🧠 Inference<br/>Ethos-U55 NPU}
+    C -->|Tensors| D(📊 Postproc<br/>NMS)
+    D -->|BBoxes| E[🖥️ Render<br/>D/AVE2D]
+    
+    style A fill:#0d1117,stroke:#00f0ff,stroke-width:2px,color:#c9d1d9
+    style B fill:#0d1117,stroke:#00f0ff,stroke-width:2px,color:#c9d1d9
+    style C fill:#0a1922,stroke:#00ffaa,stroke-width:2px,color:#c9d1d9
+    style D fill:#0d1117,stroke:#00f0ff,stroke-width:2px,color:#c9d1d9
+    style E fill:#0d1117,stroke:#00f0ff,stroke-width:2px,color:#c9d1d9
+```
+
 - **Input:** Live camera capture via the RA8P1's camera interface.
 - **Inference:** YOLOX-Tiny (INT8), 100% of operators mapped to the Ethos-U55 NPU (0% CPU fallback).
 - **Output:** (onboard LCD) Bounding boxes and object classes rendered as an on-screen overlay via the on-chip 2D drawing engine (D/AVE2D), with assistive-tech framing (fixed color palette, object-count indicator, no alarming/threat-style visuals).
-- **Pipeline:** Capture → Preprocess → NPU Inference → Postprocess/NMS → Render, running as parallel real-time tasks under **μT-Kernel (TRON RTOS) / FreeRTOS** rather than a single serialized loop.
 
 **Our submission artifacts include:**
 1. The compiled `.tflite` model + generated NPU command stream and C source (via our custom conversion scripts).
@@ -150,16 +167,35 @@ Instead of a blocking bare-metal loop, the vision pipeline is decoupled into ind
 
 **Before vs. after:**
 
-```text
-Sequential (bare-metal):
-Camera │ Capture │  idle   │  idle   │  idle    │ Capture │
-CPU    │  idle   │ Preproc │  idle   │ Postproc │  idle   │
-NPU    │  idle   │  idle   │ Infer   │  idle    │  idle   │
-
-Parallel (TRON RTOS, this implementation):
-Frame 1: Capture → Preproc → Infer → Postproc → Draw
-Frame 2:           Capture → Preproc → Infer → Postproc
-Frame 3:                     Capture → Preproc → Infer
+```mermaid
+gantt
+    title Vision Pipeline Execution (Sequential vs. Parallel RTOS)
+    dateFormat  X
+    axisFormat  %s
+    
+    section Sequential (Bare-Metal)
+    Frame 1 Capture     :a1, 0, 10
+    Frame 1 Preproc     :a2, after a1, 10
+    Frame 1 Infer (NPU) :a3, after a2, 30
+    Frame 1 Postproc    :a4, after a3, 10
+    Frame 1 Draw        :a5, after a4, 10
+    Frame 2 Capture     :a6, after a5, 10
+    
+    section Parallel (TRON RTOS)
+    F1 Capture (Cam)    :crit, b1, 0, 10
+    F1 Preproc (CPU)    :b2, after b1, 10
+    F1 Infer (NPU)      :active, b3, after b2, 30
+    F1 Postproc (CPU)   :b4, after b3, 10
+    F1 Draw (DMA)       :b5, after b4, 10
+    
+    F2 Capture (Cam)    :crit, c1, 10, 10
+    F2 Preproc (CPU)    :c2, after c1, 10
+    F2 Infer (NPU)      :active, c3, after c2, 30
+    F2 Postproc (CPU)   :c4, after c3, 10
+    
+    F3 Capture (Cam)    :crit, d1, 20, 10
+    F3 Preproc (CPU)    :d2, after d1, 10
+    F3 Infer (NPU)      :active, d3, after d2, 30
 ```
 
 **Result:** FPS is no longer bounded by the *sum* of all stages — only by the *slowest* one (Ethos-U55 inference). This gain is entirely independent of the Vela/memory tuning covered in Optimization 3.
@@ -248,7 +284,10 @@ This emits the model source arrays (`.c` and `.h` files) consumed directly by th
 
 ## 📝 What Was Tested and Rejected (For Transparency)
 
-In the interest of showing our full process rather than only positive results:
+> [!CAUTION]
+> **Optimization Dead Ends**
+> 
+> In the interest of showing our full process rather than only positive results, we document what did *not* work:
 
 - ❌ **`--memory-mode Sram_Only`** was tested and rejected — required footprint (~4.46 MB) exceeds available SRAM (~1.6 MB) on RA8P1.
 - ❌ **`--optimise Size`** was tested against `--optimise Performance` — no difference in output; both converge to the same schedule.
@@ -260,5 +299,9 @@ These negative results are included because they demonstrate that our final conf
 
 ## 📄 License
 
-This project is released under the MIT License. See `LICENSE` for details.
+> [!NOTE]
+> **MIT License**
+> 
+> This project is open-source and free to use. See the [LICENSE](LICENSE) file for full details. 
+> Developed for the Arm "Create" Hackathon — Track 1: Physical AI.
 
