@@ -130,12 +130,7 @@ We benchmark two on-device configurations, holding the model, weights, and INT8 
 The model was trained in FP32 and post-training quantized to INT8, then compiled with Arm Vela targeting the Ethos-U55 via our custom conversion script:
 
 ```bash
-vela yolox_tiny_224_int8.tflite \
-  --accelerator-config ethos-u55-256 \
-  --system-config Ethos_U55_High_End_Embedded \
-  --memory-mode Shared_Sram \
-  --optimise Performance \
-  --verbose-weights
+vela yolox_tiny_224_int8.tflite --accelerator-config ethos-u55-256 --system-config Ethos_U55_High_End_Embedded --memory-mode Shared_Sram --optimise Performance --verbose-weights
 ```
 
 **Resulting NPU operator mapping:**
