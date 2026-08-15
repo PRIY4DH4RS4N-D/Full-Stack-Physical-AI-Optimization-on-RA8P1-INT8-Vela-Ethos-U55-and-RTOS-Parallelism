@@ -163,7 +163,7 @@ Frame 2:           Capture → Preproc → Infer → Postproc
 Frame 3:                     Capture → Preproc → Infer
 ```
 
-**Result:** FPS is no longer bounded by the *sum* of all stages — only by the *slowest* one (Ethos-U55 inference). This gain is entirely independent of the Vela/memory tuning covered in Optimization 3.
+**Result:** FPS is no longer bounded by the *sum* of all stages — only by the *slowest* one (compared to camera task) (Ethos-U55 inference). This gain is entirely independent of the Vela/memory tuning covered in Optimization 3.
 
 **Two tasks, full hardware overlap:**
 
