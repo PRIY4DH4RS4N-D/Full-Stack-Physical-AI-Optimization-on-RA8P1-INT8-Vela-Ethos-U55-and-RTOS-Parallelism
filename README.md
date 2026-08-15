@@ -1,9 +1,9 @@
 <div align="center">
-  <picture>
-    <source media="(prefers-reduced-motion: reduce)" srcset="./ra8p1-physical-ai-static.svg">
-    <img src="./ra8p1-physical-ai.svg" alt="Full-Stack Physical-AI Optimization on RA8P1: INT8 • Vela • Ethos-U55 • RTOS Parallelism" width="100%" style="max-width: 1000px;">
-  </picture>
-  <br/>
+
+<img src="./animated-title.svg" alt="Animated Title" />
+<img src="./assets/animated-title.svg" alt="Animated Title" />
+
+<br>
 
 <p align="center">
   <a href="https://www.renesas.com/us/en/products/microcontrollers-microprocessors/ra-cortex-m-mcus/ra8p1-high-performance-advanced-graphics-and-vision-mcu"><img src="./assets/badges/badge_00.svg" /></a>
