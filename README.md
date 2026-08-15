@@ -186,7 +186,7 @@ This is the one optimization in this list that is **independent of the model and
 
 
 
-| Metric | Stage 2: INT8, Ethos-U55, Tuned + RTOS |
+| Metric | INT8, Ethos-U55, Tuned + RTOS |
 |:---|---:|
 | **FPS** | |
 | **End-to-end inference latency (ms)** | |
