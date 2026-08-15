@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./animated-title.svg" alt="Animated Title" />
+<img src="./assets/animated-title.svg" alt="Animated Title" />
 
 <br>
 
