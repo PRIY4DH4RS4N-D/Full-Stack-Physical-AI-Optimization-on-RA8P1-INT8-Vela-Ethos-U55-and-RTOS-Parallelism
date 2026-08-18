@@ -143,7 +143,7 @@ The RA8P1 provides ~1.6 MB of usable on-chip user SRAM. Our NPU-encoded weights 
      ```
    - *Result:* Unchanged SRAM usage and bandwidth. The default cascade schedule is optimal.
 
-*We report this as a **memory characterization finding**. We determined precisely why and how much headroom exists, ruling out plausible-looking "obvious" optimizations with hardware-grounded evidence.*
+
 
 ### Optimization 4 — Parallel RTOS Task Pipeline (μT-Kernel / TRON RTOS, FreeRTOS)
 
